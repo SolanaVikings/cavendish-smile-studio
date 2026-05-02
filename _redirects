@@ -1,0 +1,8 @@
+# Clean URLs — serve .html silently for clean slug
+/faq      /faq.html      200!
+/fees     /fees.html     200!
+
+# Force redirect .html versions to clean slugs (force flag bypasses static file)
+/faq.html   /faq    301!
+/fees.html  /fees   301!
+/index.html /       301!
