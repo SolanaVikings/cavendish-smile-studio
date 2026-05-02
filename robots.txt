@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cavendish-smile-studio.onrender.com/sitemap.xml
