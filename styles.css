@@ -109,15 +109,30 @@ h1 em, h2 em, h3 em {
   align-items: center;
   gap: 2rem;
   padding: 1.25rem var(--gutter);
-  transition: background 0.5s var(--ease), padding 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  transition: padding 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
-.site-header.is-scrolled {
-  background: rgba(245, 240, 230, 0.92);
+/* Backdrop layer lives on ::before so the header itself has no
+   backdrop-filter — otherwise the header becomes a containing block
+   for position:fixed descendants, breaking the mobile nav menu. */
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(245, 240, 230, 0.94);
   backdrop-filter: blur(14px) saturate(110%);
   -webkit-backdrop-filter: blur(14px) saturate(110%);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+  z-index: -1;
+  pointer-events: none;
+}
+.site-header.is-scrolled {
   padding-top: 0.85rem;
   padding-bottom: 0.85rem;
   box-shadow: 0 1px 0 rgba(20, 20, 15, 0.06);
+}
+.site-header.is-scrolled::before {
+  opacity: 1;
 }
 
 .brand {
@@ -1218,10 +1233,11 @@ h1 em, h2 em, h3 em {
 }
 .page-content .site-header,
 .site-header.is-static {
-  background: rgba(245, 240, 230, 0.94);
-  backdrop-filter: blur(14px) saturate(110%);
-  -webkit-backdrop-filter: blur(14px) saturate(110%);
   box-shadow: 0 1px 0 rgba(20, 20, 15, 0.06);
+}
+.page-content .site-header::before,
+.site-header.is-static::before {
+  opacity: 1;
 }
 .page-content .brand,
 .site-header.is-static .brand {
